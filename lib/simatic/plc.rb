@@ -8,6 +8,7 @@ module Simatic
   class Plc
     def initialize address, args = {}
       @address = address
+      @port = args[:port] || 102
       @rack = args[:rack] || 0
       @slot = args[:slot] || 2 
     end
@@ -69,7 +70,7 @@ module Simatic
     end
     
     def connect timeout = 500
-      @socket = Socket.tcp @address, 102, connect_timeout: timeout / 1000.0
+      @socket = Socket.tcp @address, @port, connect_timeout: timeout / 1000.0
 
       setup = Sessions::SetupSession.new @rack, @slot
       @socket.send setup.make_request, 0
