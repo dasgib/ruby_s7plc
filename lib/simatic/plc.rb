@@ -83,7 +83,7 @@ module Simatic
     end
 
     def disconnect
-      @socket.close
+      @socket.close if @socket
     end
 
     private
